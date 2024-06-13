@@ -6,6 +6,7 @@ import Register from "../components/Auth/Register";
 import AddTyper from "../components/AddTyper";
 import JoinTyper from "../components/JoinTyper";
 import TyperList from "../components/TyperList";
+import Dashboard from "../components/Dashboard";
 
 export const authenticatedRootRouter = createBrowserRouter([
 	{
@@ -14,8 +15,18 @@ export const authenticatedRootRouter = createBrowserRouter([
 		errorElement: <div>404 Not Found</div>,
 		children: [
 			{
-				path: "/",
+				path: "",
+				element: <Dashboard />,
+				errorElement: <div>404 Not Found</div>,
+			},
+			{
+				path: "list",
 				element: <TyperList />,
+				errorElement: <div>404 Not Found</div>,
+			},
+			{
+				path: "list/:id",
+				element: <div>Details</div>,
 				errorElement: <div>404 Not Found</div>,
 			},
 			{
@@ -27,8 +38,12 @@ export const authenticatedRootRouter = createBrowserRouter([
 				path: "join",
 				element: <JoinTyper />,
 				errorElement: <div>404 Not Found</div>,
-			}
-
+			},
+			{
+				path: "account",
+				element: <div>Account</div>,
+				errorElement: <div>404 Not Found</div>,
+			},
 		],
 	},
 ]);
