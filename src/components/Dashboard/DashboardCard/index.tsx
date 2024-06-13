@@ -3,27 +3,37 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Goal from "../../../assets/images/goal.png";
 import { CardActionArea } from "@mui/material";
+import { translate } from "../../../i18n.ts";
+import { useNavigate } from "react-router-dom";
 
-interface IDashboardCardProps {}
-const DashboardCard: React.FC<IDashboardCardProps> = () => {
+interface IDashboardCardProps {
+	image: string;
+	translationKey: string;
+}
+const DashboardCard: React.FC<IDashboardCardProps> = ({
+	image,
+	translationKey,
+}) => {
+	const navigate = useNavigate();
+	const handleClick = () => navigate(`${translationKey}`);
+
 	return (
 		<Card sx={{ maxWidth: 345 }}>
-			<CardActionArea>
+			<CardActionArea onClick={handleClick}>
 				<CardMedia
-					sx={{ height: 140 }}
-					image={Goal}
-					title="green iguana"
+					sx={{ height: 240, backgroundSize: "100% 100%" }}
+					image={image}
+					title={translationKey}
 				/>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="div">
-						Lizard
+						{translate(`dashboard.card.title.${translationKey}`)}
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
-						Lizards are a widespread group of squamate reptiles,
-						with over 6,000 species, ranging across all continents
-						except Antarctica
+						{translate(
+							`dashboard.card.description.${translationKey}`,
+						)}
 					</Typography>
 				</CardContent>
 			</CardActionArea>
