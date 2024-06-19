@@ -14,6 +14,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Outlet } from "react-router-dom";
 import Menu from "./Menu";
 import { Container } from "@mui/material";
+import { translate } from "../../i18n.ts";
 
 const drawerWidth = 240;
 
@@ -117,7 +118,7 @@ export default function Main() {
 							<MenuIcon />
 						</IconButton>
 						<Typography variant="h6" noWrap component="div">
-							Mini variant drawer
+							{translate("app.title")}
 						</Typography>
 					</Toolbar>
 				</AppBar>

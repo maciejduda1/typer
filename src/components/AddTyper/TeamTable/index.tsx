@@ -34,43 +34,37 @@ const TeamTable: React.FC = () => {
 	};
 
 	return (
-		<Card sx={{ padding: "2rem" }} elevation={2}>
-			<CardContent>
-				<Box my={2} display={"flex"} justifyContent={"flex-end"}>
-					<Button
-						onClick={() => setIsModalOpen(true)}
-						variant="contained"
-						color="primary"
-						startIcon={<AddIcon />}
-					>
-						{translate("addLeague.addTeam")}
-					</Button>
-				</Box>
-				<TableContainer component={Paper}>
-					<Table
-						sx={{ minWidth: 500 }}
-						aria-label="league teams table"
-					>
-						<TableHead>
-							<TableRow>
-								<TableCell>Name</TableCell>
-								<TableCell align="right">
-									Liczba Graczy
-								</TableCell>
-								<TableCell align="right">Akcje</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody></TableBody>
-					</Table>
-				</TableContainer>
-			</CardContent>
+		<Box>
+			<Box my={2} display={"flex"} justifyContent={"flex-end"}>
+				<Button
+					onClick={() => setIsModalOpen(true)}
+					variant="contained"
+					color="primary"
+					startIcon={<AddIcon />}
+				>
+					{translate("addLeague.addTeam")}
+				</Button>
+			</Box>
+			<TableContainer component={Paper}>
+				<Table sx={{ minWidth: 500 }} aria-label="league teams table">
+					<TableHead>
+						<TableRow>
+							<TableCell>Name</TableCell>
+							<TableCell align="right">Liczba Graczy</TableCell>
+							<TableCell align="right">Akcje</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody></TableBody>
+				</Table>
+			</TableContainer>
+
 			<Modal
 				isOpen={isModalOpen}
 				handleClose={() => setIsModalOpen(false)}
 			>
 				TEST
 			</Modal>
-		</Card>
+		</Box>
 	);
 };
 

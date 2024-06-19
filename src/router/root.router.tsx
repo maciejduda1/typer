@@ -7,6 +7,7 @@ import AddTyper from "../components/AddTyper";
 import JoinTyper from "../components/JoinTyper";
 import TyperList from "../components/TyperList";
 import Dashboard from "../components/Dashboard";
+import Account from "../components/Account";
 
 export const authenticatedRootRouter = createBrowserRouter([
 	{
@@ -41,7 +42,7 @@ export const authenticatedRootRouter = createBrowserRouter([
 			},
 			{
 				path: "account",
-				element: <div>Account</div>,
+				element: <Account />,
 				errorElement: <div>404 Not Found</div>,
 			},
 		],
