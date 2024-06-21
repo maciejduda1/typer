@@ -1,7 +1,7 @@
 import React from "react";
 import { translate } from "../../../../i18n.ts";
-import { Stack, Divider, Typography, TextField, Button } from "@mui/material";
-import { useFormik } from "formik";
+import { Stack, Divider, Typography, Button } from "@mui/material";
+import { Form, Formik, FormikProps } from "formik";
 import { useDispatch } from "react-redux";
 import {
 	setLeagueSetup,
@@ -11,28 +11,27 @@ import { WizardSteps } from "../../../../types/wizzard.types.ts";
 import setupLeagueStepFormValidator, {
 	SetupLeagueStepFormValuesType,
 } from "./setupLeagueStepForm.validator.ts";
+import FormikTextField from "../../../Shared/FormikComponents/FormikTextField";
 
 const SetupLeagueStep: React.FC = () => {
 	const dispatch = useDispatch();
-	const formik = useFormik<SetupLeagueStepFormValuesType>({
-		initialValues: {
-			leagueName: "",
-			numberOfTeams: 3,
-			password: null,
-			repeatPassword: null,
-		},
-		validationSchema: setupLeagueStepFormValidator,
-		onSubmit: (values) => {
-			dispatch(
-				setLeagueSetup({
-					name: values.leagueName,
-					numberOfTeams: values.numberOfTeams,
-					password: values.password || null,
-				}),
-			);
-			dispatch(setStep(WizardSteps.SETUP_TEAMS_STEP));
-		},
-	});
+	const initialValues: SetupLeagueStepFormValuesType = {
+		leagueName: "",
+		numberOfTeams: 3,
+		password: null,
+		repeatPassword: null,
+	};
+
+	const submitForm = (values: SetupLeagueStepFormValuesType) => {
+		dispatch(
+			setLeagueSetup({
+				name: values.leagueName,
+				numberOfTeams: values.numberOfTeams,
+				password: values.password || null,
+			}),
+		);
+		dispatch(setStep(WizardSteps.SETUP_TEAMS_STEP));
+	};
 
 	return (
 		<Stack spacing={2}>
@@ -46,76 +45,78 @@ const SetupLeagueStep: React.FC = () => {
 					)}
 				</Typography>
 			</Divider>
-			<Stack spacing={2} justifyItems={"center"} alignItems={"center"}>
-				<TextField
-					error={!!formik.errors.leagueName}
-					required
-					value={formik.values.leagueName}
-					onChange={formik.handleChange}
-					name={"leagueName"}
-					label={translate(
-						"addLeague.steps.setupLeagueStep.leagueNameLabel",
-					)}
-					helperText={
-						formik.errors.leagueName
-							? translate(`errors.${formik.errors.leagueName}`)
-							: null
-					}
-					variant="standard"
-				/>
-				<TextField
-					error={!!formik.errors.numberOfTeams}
-					required
-					value={formik.values.numberOfTeams}
-					onChange={formik.handleChange}
-					name={"numberOfTeams"}
-					InputProps={{ inputProps: { min: 3, max: 100 } }}
-					label={translate(
-						"addLeague.steps.setupLeagueStep.numberOfTeamsLabel",
-					)}
-					helperText={
-						formik.errors.numberOfTeams
-							? translate(`errors.${formik.errors.numberOfTeams}`)
-							: ""
-					}
-					type="number"
-					variant="standard"
-				/>
-			</Stack>
-			<Divider />
-			<Typography textAlign={"center"} variant="subtitle1">
-				{translate("addLeague.steps.setupLeagueStep.passwordInfo")}
-			</Typography>
-			<Stack spacing={2} justifyItems={"center"} alignItems={"center"}>
-				<TextField
-					value={formik.values.password}
-					onChange={formik.handleChange}
-					name={"password"}
-					label={translate(
-						"addLeague.steps.setupLeagueStep.passwordLabel",
-					)}
-					variant="standard"
-				/>
-				<TextField
-					value={formik.values.repeatPassword}
-					onChange={formik.handleChange}
-					name={"repeatPassword"}
-					label={translate(
-						"addLeague.steps.setupLeagueStep.repeatPasswordLabel",
-					)}
-					variant="standard"
-				/>
-			</Stack>
-			<Divider />
-			<Stack justifyContent={"center"} alignItems={"center"}>
-				<Button
-					disabled={!formik.isValid}
-					variant={"outlined"}
-					onClick={formik.submitForm}
-				>
-					{translate("button.next")}
-				</Button>
-			</Stack>
+			<Formik
+				initialValues={initialValues}
+				onSubmit={submitForm}
+				validationSchema={setupLeagueStepFormValidator}
+			>
+				{(props: FormikProps<SetupLeagueStepFormValuesType>) => (
+					<Form>
+						<Stack
+							spacing={2}
+							justifyItems={"center"}
+							alignItems={"center"}
+						>
+							<FormikTextField
+								required
+								name={"leagueName"}
+								label={
+									"addLeague.steps.setupLeagueStep.leagueNameLabel"
+								}
+								variant="standard"
+							/>
+							<FormikTextField
+								required
+								name={"numberOfTeams"}
+								InputProps={{
+									inputProps: { min: 3, max: 100 },
+								}}
+								label={
+									"addLeague.steps.setupLeagueStep.numberOfTeamsLabel"
+								}
+								type="number"
+								variant="standard"
+							/>
+						</Stack>
+						<Divider />
+						<Typography textAlign={"center"} variant="subtitle1">
+							{translate(
+								"addLeague.steps.setupLeagueStep.passwordInfo",
+							)}
+						</Typography>
+						<Stack
+							spacing={2}
+							justifyItems={"center"}
+							alignItems={"center"}
+						>
+							<FormikTextField
+								name={"password"}
+								label={
+									"addLeague.steps.setupLeagueStep.passwordLabel"
+								}
+								variant="standard"
+							/>
+							<FormikTextField
+								name={"repeatPassword"}
+								label={
+									"addLeague.steps.setupLeagueStep.repeatPasswordLabel"
+								}
+								variant="standard"
+							/>
+						</Stack>
+						<Divider />
+						<Stack justifyContent={"center"} alignItems={"center"}>
+							<Button
+								disabled={!props.isValid}
+								variant={"outlined"}
+								onClick={props.submitForm}
+							>
+								{translate("button.next")}
+							</Button>
+						</Stack>
+					</Form>
+				)}
+			</Formik>
 		</Stack>
 	);
 };
