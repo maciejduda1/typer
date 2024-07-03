@@ -40,7 +40,7 @@ const en_US = {
 				repeatPasswordLabel: "Repeat password",
 				generalSectionTitle: "General setup",
 				passwordInfo:
-					"You may setup password for your league. It will be required to join. If You don't want to set password, leave it empty. league will be public.",
+					"Should the league be private? If yes, set the password",
 			},
 			addTeamsStep: {
 				title: "Add teams",

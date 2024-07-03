@@ -1,21 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { WizardSteps } from "../../types/wizzard.types.ts";
+import { SetupLeagueStepFormValuesType } from "../../components/AddTyper/AddLeagueWizzard/SetupLeagueStep/setupLeagueStepForm.validator.ts";
 
 export interface IAddLeagueState {
 	step: WizardSteps;
-	leagueSetup: {
-		name: string;
-		numberOfTeams: number;
-		password: string | null;
-	};
+	leagueSetup: SetupLeagueStepFormValuesType;
 }
 
 const initialState: IAddLeagueState = {
 	step: WizardSteps.SETUP_LEAGUE_STEP,
 	leagueSetup: {
-		name: "",
-		numberOfTeams: 0,
-		password: null,
+		leagueName: "",
+		numberOfTeams: 3,
+		private: false,
+		password: undefined,
+		repeatPassword: undefined,
 	},
 };
 

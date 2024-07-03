@@ -10,3 +10,8 @@ export const selectAddLeagueStep = createSelector(
 	selectAddLeague,
 	(addLeague) => addLeague.step,
 );
+
+export const selectAddLeagueSetup = createSelector(
+	selectAddLeague,
+	(addLeague) => addLeague.leagueSetup,
+);
